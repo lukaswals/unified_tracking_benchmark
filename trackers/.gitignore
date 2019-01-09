@@ -1,0 +1,7 @@
+# Exclude everything
+*
+*/
+
+# Except the following
+!.gitignore
+!README.md

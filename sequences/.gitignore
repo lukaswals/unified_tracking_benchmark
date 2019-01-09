@@ -1,0 +1,8 @@
+# Ignore everything in this directory
+*
+
+# Except
+!.gitignore
+!archives/
+!*_SEQUENCES
+
