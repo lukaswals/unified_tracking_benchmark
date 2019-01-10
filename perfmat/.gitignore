@@ -1,1 +1,7 @@
-*.mat
+# Exclude everything
+*
+
+# Except the following
+!.gitignore
+!OPE/
+!OPE/perfplot_curves_OPE_OTB100.mat
