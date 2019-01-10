@@ -1,9 +1,12 @@
 function trackers = config_trackers
+% CONFIG_TRACKERS Configure trackers to evaluate/compare results
+%
 
 % Register State-of-the-art trackers results here
 register('trackers', struct('name','MDNet','namePaper','MDNet'));
 register('trackers', struct('name','CCOT','namePaper','CCOT'));
 register('trackers', struct('name','ECO','namePaper','ECO'));
+register('trackers', struct('name','ECO-HC','namePaper','ECO'));
 register('trackers', struct('name','SRDCFdecon','namePaper','SRDCFdecon'));
 register('trackers', struct('name','HDT','namePaper','HDT'));
 register('trackers', struct('name','Staple','namePaper','Staple'));
@@ -17,7 +20,7 @@ register('trackers', struct('name','MEEM','namePaper','MEEM'));
 register('trackers', struct('name','KCF','namePaper','KCF'));
 register('trackers', struct('name','SAMF','namePaper','SAMF'));
 
-% Register your own tracker here. 
+% Register your own tracker here.
 % 'name': The identifier of your tracker
 % 'namePaper': The name of tracker's repository (folder). You can put
 %              multiple versions of tracker in a single repository
