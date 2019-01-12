@@ -1,12 +1,11 @@
 % Configure necessary paths for the Toolkit
 startup;
 
+%% CONFIGURABLE PARAMETERS HERE
 % If you already downloaded the dataset, please set the paths for the 
 % corresponding dataset here. 
 % If not, leave it blank and the toolkit will download it automatically.
-%set_global_variable('otb_path', ''); % OTB100, OTB50, OTB2013
-%set_global_variable('tcolor_path', ''); % Temple Color
-set_global_variable('otb_path', 'G:\Lucas\OTB-100'); % OTB100, OTB50, OTB2013
+set_global_variable('otb_path', ''); % OTB100, OTB50, OTB2013
 set_global_variable('tcolor_path', ''); % Temple Color
 
 % Configure evaluation type and benchmark to use
@@ -16,15 +15,17 @@ eval_method = 'OPE';
 % Not implemented evaluation methods (yet):
 %   Temporal Robustness Evaluation (TRE)
 %   Spatial Robustness Evaluation (SRE)
-dataset = 'OTB100';
+dataset = 'TCOLOR128';
 % Available datasets:
+%   BenchkmarName -> Dataset1, Dataset2, ...
 %   OTB -> OTB2013, OTB50, OTB100
 %   Temple-Color -> TCOLOR128
-rankingType = 'threshold';
+rankingType = 'AUC';
 % Available ranking types:
 %   AUC: Area under the curve
 %   threshold: 0.5 for Success plot, 20 pixel distance for Precision Plot
 
+%% EVALUATION STARTS HERE...
 set_global_variable('dataset', dataset);
 set_global_variable('rankingType', rankingType);
 
@@ -41,26 +42,13 @@ OPE_evaluate(sequences, trackers);
 
 % Evaluate the results and save to a .mat file
 fprintf('\tEvaluating obtained results...\n');
-% Get value for all Thresholds (for AUC ranking)
+% Create performance mat file for all Thresholds. Later used to plot results
 OPE_perfmat(sequences, trackers);
-% Get value for specific Thresholds ()
-%OPE_perfmat_noauc(sequences, trackers, eval_method);
-
-% Draw performance plots PER sequence
-%fprintf('\tDrawing Performance plots per sequence...\n');
-%OPEps_drawplot(sequences, trackers, linespecs);
 
 % Draw performance plots
 fprintf('\tDrawing Performance plots...\n');
 % Rank trackers according to the AUC of the plots
 OPE_drawplot(sequences, trackers, linespecs);
-% Rank Success plot according to threshold value at 0.5
-% Rank Precision plot according to distance of 20 pixel
-%OPE_drawplot_noauc(sequences, trackers, linespecs);
-
-% OPTIONAL: uncomment following lines to draw performance plots per challenge
-%fprintf('\tDrawing Performance plot for each challenging attribute...\n');
-%OPEpc_perfmat(sequences, trackers, eval_method);
-%OPEpc_drawplot(sequences, trackers, linespecs, eval_method);
+% TODO: Draw performance plots per challenge of the 
 
 fprintf('\tFinished Evaluation!...\n');

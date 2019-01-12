@@ -11,8 +11,10 @@ function sequences = config_sequences
     switch dataset
         case {'OTB2013', 'OTB50', 'OTB100'}
             seqspath = get_global_variable('otb_path');
+            get_sequence = @get_otb_sequence;
         case 'TCOLOR128'
             seqspath = get_global_variable('tcolor_path');
+            get_sequence = @get_tcolor_sequence;
         otherwise
             error('Dataset option ''%s'' not supported. Please check again the available datasets.', dataset);
     end
@@ -35,7 +37,7 @@ function sequences = config_sequences
     lite_cache_file = fullfile(get_global_variable('toolkit_path'), 'cache', [dataset '_sequences_lite_cache.mat']);
 
     if exist(cache_file, 'file')
-        fprintf('Load cache file %s\n', cache_file);
+        fprintf('Load sequence cache file %s\n', cache_file);
         load(cache_file);
         return;
     else
@@ -61,7 +63,8 @@ function sequences = config_sequences
         if ~exist(fullfile(seqspath, download_name), 'dir')
             download_if_needed(seqspath, download_name);
         end
-        register('sequences', get_otb_sequence(seqspath, sequence_name));
+        % Use the function handle created before
+        register('sequences', get_sequence(seqspath, sequence_name));
     end
     fclose(fid);
 

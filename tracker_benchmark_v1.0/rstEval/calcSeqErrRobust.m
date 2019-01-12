@@ -9,7 +9,18 @@ function [aveErrCoverage, aveErrCenter,errCoverage, errCenter] = calcSeqErrRobus
 % errCenterAll=[];
 % errCoverageAll=[];
 
-seq_length = results.len;
+% Correction code for other datasets other than OTB. Added by Lucas
+try 
+    % Check if the results file has the "len" variable, as originally intended
+    seq_length = results.len;
+catch em
+    % Verify that the error indeed stems from non-existant field
+    if strcmp(em.identifier, 'MATLAB:nonExistentField')
+         seq_length = length(results.res);
+    else
+         throw( em ); % Different error - handle by caller?
+    end
+end
 
 if strcmp(results.type,'rect')
     for i = 2:seq_length

@@ -2,7 +2,7 @@ function s = get_otb_sequence(seqspath, sequence)
 % GET_OTB_SEQUENCE Configures information of a sequence from OTB Dataset
 % into a struct variable
 %
-    fprintf('Getting sequence %s data...\n', sequence);
+    fprintf('Getting sequence ''%s'' data...\n', sequence);
     s = struct();
     % NAME (identifier)
     s.name = sequence;
