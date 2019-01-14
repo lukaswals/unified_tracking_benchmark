@@ -9,17 +9,21 @@ Anyone interested in collab is more than welcome :)
 
 ## About
 
-This is a friendly toolkit for comparing your Tracker/s and the State-of-the-art trackers on datasets like the Online Tracking Benchmark (OTB-2013 and OTB-2015) or Temple-Color-128 
+This is a friendly toolkit for comparing your Tracker/s and the State-of-the-art trackers on datasets like the Online Tracking Benchmark (OTB-2013 and OTB-2015) or Temple-Color-128
 The source code was inherited from the official repository [Visual Tracking Benchmark](http://cvlab.hanyang.ac.kr/tracker_benchmark/index.html).
 
-You can obtain results for a specific dataset like OTB100. 
-Trackers are ranked according to the AUC (Area Under the Curve) of the plots... 
-![Success Plot of OTB ranked by AUC](figs/sample/success_plot_OPE_OTB100_AUC.png)
-![Precision Plot of OTB ranked by AUC](figs/sample/precision_plot_OPE_OTB100_AUC.png)
+You can obtain results for a specific dataset like OTB100.
+Trackers are ranked according to the AUC (Area Under the Curve) of the plots...
+<p align="center">
+<img src="figs/sample/success_plot_OPE_OTB100_AUC.png" alt="Success Plot of OTB ranked by AUC" width="500">
+<img src="figs/sample/precision_plot_OPE_OTB100_AUC.png" alt="Precision Plot of OTB ranked by AUC" width="500">
+</p>
 
 ... or by a specific Threshold (0.5 for Success plot and 20 pixel distance for Precision plot)
-![Success Plot of OTB ranked by AUC](figs/sample/success_plot_OPE_OTB100_AUC.png)
-![Precision Plot of OTB ranked by AUC](figs/sample/precision_plot_OPE_OTB100_AUC.png)
+<p align="center">
+<img src="figs/sample/success_plot_OPE_OTB100_threshold.png" alt="Success Plot of OTB ranked by Overlap Precision at Threshold 0.5" width="500">
+<img src="figs/sample/precision_plot_OPE_OTB100_threshold.png" alt="Precision Plot of OTB ranked by Center Distance Precision at 20 pixels" width="500">
+</p>
 
 ## Features
 * Compatible tracking protocol
@@ -28,7 +32,7 @@ Trackers are ranked according to the AUC (Area Under the Curve) of the plots...
 * Highly designable and Modularized code, based on original OTB Benchmark
 * Updated with state-of-the-art results
 
-## Usage 
+## Usage
 
 1. Add your tracker repository to `trackers` folder by creating a folder with your tracker name and putting the code there.
 2. Configure your tracker for evaluation modifying the file `configs/config_trackers.m`. See examples included in the file.
