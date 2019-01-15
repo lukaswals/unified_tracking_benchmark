@@ -18,9 +18,17 @@ end
 thresholdSetOverlap = 0:0.05:1;
 thresholdSetError = 0:50;
 
+attributes=[];
+% get attribute data from the sequence's file
+for idxSeq = 1:nseq
+    s = sequences{idxSeq}; 
+    attributes(idxSeq,:) = s.attributes;
+end
+natt = size(attributes,2);
+
 metricTypeSet = {'error', 'overlap'};
 rankingType = get_global_variable('rankingType');
-% Number of trackers to show
+% Number of trackers to show. Currently not used.
 rankNum = 10;
 
 % Load the perfmat
@@ -29,6 +37,11 @@ load(perfmat_file); %'success_curve','precision_curve','nameTrkAll'
 
 for i=1:length(metricTypeSet)
     metricType = metricTypeSet{i};%error,overlap
+    
+    % Don't rank center location error using AUC
+    if strcmp(metricType,'error') && strcmp(rankingType,'AUC')
+        continue;
+    end
     
     switch metricType
         case 'overlap' % for Success plot
@@ -58,7 +71,8 @@ for i=1:length(metricTypeSet)
             AUC = cellfun(@mean, curvePlot);
             perf = mean(AUC, 2); % the AUC of the plot of each tracker
         case 'threshold'
-            thre = cellfun(@(x)x(rankIdx), curvePlot,'uni',0); % Could be replaced with a for loop
+            % Could be replaced with a for loop for better performance
+            thre = cellfun(@(x)x(rankIdx), curvePlot,'uni',0); 
             perf = mean(cell2mat(thre), 2);
     end
 
@@ -79,7 +93,7 @@ for i=1:length(metricTypeSet)
     end
     trackersRanked = trackersRanked(1:rankNum);
     %}
-    % Draw Success/Precision plots of OPE
+    % Draw Success/Precision plots of OPE over the whole dataset
     h = figure; hold on;
     for idTrk = trackersRanked'
         plot(thresholdSet, curve(idTrk,:), linespecs{idTrk}); hold on;
@@ -91,9 +105,15 @@ for i=1:length(metricTypeSet)
     xlabel(xLabelName);
     ylabel(yLabelName);
     saveas(h,fullfile(figure_path, figName),'png');
-    
+        
 end
 
+% Draw Success plots of OPE for a specific challenging attribute
+%{
+    switch metricType
+        case 'overlap'
+    end
+%}
 
 end
 

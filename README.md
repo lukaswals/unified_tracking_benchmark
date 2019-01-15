@@ -13,14 +13,12 @@ This is a friendly toolkit for comparing your Tracker/s and the State-of-the-art
 The source code was inherited from the official repository [Visual Tracking Benchmark](http://cvlab.hanyang.ac.kr/tracker_benchmark/index.html).
 
 You can obtain results for a specific dataset like OTB100.
-Trackers are ranked according to the AUC (Area Under the Curve) of the plots...
+Trackers are ranked according to the AUC (Area Under the Curve) for the Success plot...
 <p align="center">
-<img src="figs/sample/precision_plot_OPE_OTB100_AUC.png" alt="Precision Plot of OTB ranked by AUC" width="400">
 <img src="figs/sample/success_plot_OPE_OTB100_AUC.png" alt="Success Plot of OTB ranked by AUC" width="400">
-
 </p>
 
-... or by a specific Threshold (0.5 for Success plot and 20 pixel distance for Precision plot)
+... or by a specific Threshold: 0.5 for Success plot, 20 pixel mean distance for Precision plot
 <p align="center">
 <img src="figs/sample/precision_plot_OPE_OTB100_threshold.png" alt="Precision Plot of OTB ranked by Center Distance Precision at 20 pixels" width="400">
 <img src="figs/sample/success_plot_OPE_OTB100_threshold.png" alt="Success Plot of OTB ranked by Overlap Precision at Threshold 0.5" width="400">
@@ -42,7 +40,6 @@ Trackers are ranked according to the AUC (Area Under the Curve) of the plots...
 5. Execute `run_evaluation.m` script to evaluate on the desired dataset.
 
 ## To-do List (in no particular order)
-* Add configuration for evaluating in Temple-Color-128 dataset
 * Results per challenging attributes
 * Add more up-to-date results (if you want to help with this, please contact me!, any help is more than welcome!)
 * Possibility of writing a script to execute tracker code that is not included in the `trackers` folder (maybe?)
