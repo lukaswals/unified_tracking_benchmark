@@ -31,7 +31,9 @@ switch dataset
         register('trackers', struct('name','ECO-HC','namePaper','ECO'));
 end
 
-% Register your own tracker here.
+% Register your own tracker here. Below is an explanation of the necessary
+% struct parameters for execution:
+%
 % 'name': The identifier of your tracker
 % 'namePaper': The name of tracker's repository (folder). You can put
 %              multiple versions of tracker in a single repository

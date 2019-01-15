@@ -2,13 +2,16 @@ function s = get_otb_sequence(seqspath, sequence)
 % GET_OTB_SEQUENCE Configures information of a sequence from OTB Dataset
 % into a struct variable
 %
+    toolkit_path = get_global_variable('toolkit_path');
+    att_path = fullfile(toolkit_path, 'tracker_benchmark_v1.0', 'anno', 'att');
+
     fprintf('Getting sequence ''%s'' data...\n', sequence);
     s = struct();
     % NAME (identifier)
     s.name = sequence;
     switch sequence
-        % In OTB, the following sequence has 2 objects, so we need to
-        % download sequence only one time
+        % In OTB, the following sequence has 2 objects, so there will be 2
+        % groundtruth files
         case {'Human4-2', 'Jogging-1', 'Jogging-2', 'Skating2-1', 'Skating2-2'}
             splitted = strsplit(sequence, '-');
             folder_name = splitted{1};
@@ -17,19 +20,22 @@ function s = get_otb_sequence(seqspath, sequence)
             folder_name = sequence;
             ground_truth = 'groundtruth_rect.txt';
     end
-    % PATH (the dir containing the sequence's files)
+    % SEQUENCE PATH (the dir containing the sequence's files)
     s.path = fullfile(seqspath, folder_name);
     % ANNO_FILE
     anno_filename = ground_truth;
     s.anno_file = fullfile(s.path, anno_filename);
+    % ANNOS (annotations)
+    s.annos = dlmread(s.anno_file);
+    % ATTR_FILE (which challenging attributes has this sequence)
+    attr_file = [att_path '/' lower(s.name) '.txt'];
+    s.attributes = load(attr_file);
     % NZ (num of zeros)
     s.nz = 4;
     % EXT
     s.ext = 'jpg';
     % STARTFRAME
     s.startFrame = 1;
-    % ANNOS (annotations)
-    s.annos = dlmread(s.anno_file);
     % ENDFRAME
     s.endFrame = size(s.annos, 1);
     % SPECIAL_CASES

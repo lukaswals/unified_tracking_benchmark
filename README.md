@@ -15,14 +15,15 @@ The source code was inherited from the official repository [Visual Tracking Benc
 You can obtain results for a specific dataset like OTB100.
 Trackers are ranked according to the AUC (Area Under the Curve) of the plots...
 <p align="center">
-<img src="figs/sample/success_plot_OPE_OTB100_AUC.png" alt="Success Plot of OTB ranked by AUC" width="500">
-<img src="figs/sample/precision_plot_OPE_OTB100_AUC.png" alt="Precision Plot of OTB ranked by AUC" width="500">
+<img src="figs/sample/precision_plot_OPE_OTB100_AUC.png" alt="Precision Plot of OTB ranked by AUC" width="400">
+<img src="figs/sample/success_plot_OPE_OTB100_AUC.png" alt="Success Plot of OTB ranked by AUC" width="400">
+
 </p>
 
 ... or by a specific Threshold (0.5 for Success plot and 20 pixel distance for Precision plot)
 <p align="center">
-<img src="figs/sample/success_plot_OPE_OTB100_threshold.png" alt="Success Plot of OTB ranked by Overlap Precision at Threshold 0.5" width="500">
-<img src="figs/sample/precision_plot_OPE_OTB100_threshold.png" alt="Precision Plot of OTB ranked by Center Distance Precision at 20 pixels" width="500">
+<img src="figs/sample/precision_plot_OPE_OTB100_threshold.png" alt="Precision Plot of OTB ranked by Center Distance Precision at 20 pixels" width="400">
+<img src="figs/sample/success_plot_OPE_OTB100_threshold.png" alt="Success Plot of OTB ranked by Overlap Precision at Threshold 0.5" width="400">
 </p>
 
 ## Features

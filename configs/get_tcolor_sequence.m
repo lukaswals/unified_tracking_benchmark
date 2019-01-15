@@ -7,13 +7,15 @@ function s = get_tcolor_sequence(seqspath, sequence)
     s = struct();
     % NAME (identifier)
     s.name = sequence;
-    % PATH (the dir containing the sequence's files)
+    % SEQUENCE PATH (the dir containing the sequence's files)
     s.path = fullfile(seqspath, sequence);
-    % ANNO_FILE (Containing GT information)
+    % ANNO_FILE (containing GT information)
     anno_filename = [sequence '_gt.txt'];
     s.anno_file = fullfile(s.path, anno_filename);
     % ANNOS (GT Annotations)
     s.annos = dlmread(s.anno_file);
+    % ATTR_FILE (which challenging attributes has this sequence)
+    
     % NZ (num of zeros)
     s.nz = 4;
     % EXT
