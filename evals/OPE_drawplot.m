@@ -18,6 +18,7 @@ end
 thresholdSetOverlap = 0:0.05:1;
 thresholdSetError = 0:50;
 
+[attribute_names, att_names_long] = get_attribute_list;
 attributes=[];
 % get attribute data from the sequence's file
 for idxSeq = 1:nseq
@@ -44,7 +45,7 @@ for i=1:length(metricTypeSet)
     end
     
     switch metricType
-        case 'overlap' % for Success plot
+        case 'overlap' % Parameters for Success plot
             thresholdSet = thresholdSetOverlap;
             rankIdx = 11;
             curvePlot = success_curve;
@@ -52,7 +53,7 @@ for i=1:length(metricTypeSet)
             titleName = ['Success plots of OPE in ' dataset];
             xLabelName = 'Overlap threshold';
             yLabelName = 'Success rate';
-        case 'error' % for Precision plot
+        case 'error' % Parameters for Precision plot
             thresholdSet = thresholdSetError;
             rankIdx = 21;
             curvePlot = precision_curve;
@@ -108,12 +109,70 @@ for i=1:length(metricTypeSet)
         
 end
 
-% Draw Success plots of OPE for a specific challenging attribute
-%{
-    switch metricType
-        case 'overlap'
+if strcmp(rankingType, 'AUC') == 1
+    fprintf('\tDrawing Performance plots per Attribute...\n');
+    % Draw Success plots of OPE for a specific challenging attribute
+    for attIdx = 1:natt   
+        %challType = ['OPE_' attribute_names{attIdx}];
+        idxSeqSet = find(attributes(:,attIdx)>0);
+        nseqatt = length(idxSeqSet);
+        % for attribute name for figure title
+        challTitle = [att_names_long{attIdx} ' (' num2str(nseqatt) ')'];
+        % Get results of all sequences tagged with this attribute
+        success_curve_chall = success_curve(:,idxSeqSet);
+
+        % Success Plot parameters
+        thresholdSet = thresholdSetOverlap;
+        rankIdx = 11;
+        curvePlot = success_curve_chall;
+        figFn = 'success_plot';
+        titleName = ['Success plots of OPE in ' dataset ' - ' challTitle];
+        xLabelName = 'Overlap threshold';
+        yLabelName = 'Success rate';
+
+        % Name of image file to save
+        figName = [figFn '_OPE_' dataset '_' attribute_names{attIdx}];
+
+        % For now, the per attribute plots only rank by AUC, haven't seen
+        % any paper presenting this plot results with Threshold ranking,
+        % but the option is easy to add by uncommenting the lines below
+        switch rankingType
+            case 'AUC'
+                AUC = cellfun(@mean, curvePlot);
+                perf = mean(AUC, 2); % the AUC of the plot of each tracker
+            %{    
+            case 'threshold'
+                % Could be replaced with a for loop for better performance
+                thre = cellfun(@(x)x(rankIdx), curvePlot,'uni',0); 
+                perf = mean(cell2mat(thre), 2);
+            %}
+        end
+
+        % Make the legend for the plot with the corresponding ranking type
+        for idTrk = 1:ntrk
+            trkLegendAll{idTrk} = [nameTrkAll{idTrk} ' [' num2str(perf(idTrk),'%.3f') ']'];
+        end
+        % Rank the trackers
+        [~, trackersRanked] = sort(perf, 'descend');
+
+        % cell2array
+        curve = reshape(cell2mat(curvePlot), ntrk, length(thresholdSet), nseqatt);
+        curve = squeeze(mean(curve,3));
+
+        h = figure; hold on;
+        for idTrk = trackersRanked'
+            plot(thresholdSet, curve(idTrk,:), linespecs{idTrk}); hold on;
+        end
+
+        legend(trkLegendAll(trackersRanked), 'Location', 'southwest');
+        box on; % displays the box outline around the current axes
+        title(titleName);
+        xlabel(xLabelName);
+        ylabel(yLabelName);
+        saveas(h,fullfile(figure_path, figName),'png');
+        
     end
-%}
+end %if end
 
 end
 

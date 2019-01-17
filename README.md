@@ -24,6 +24,12 @@ Trackers are ranked according to the AUC (Area Under the Curve) for the Success 
 <img src="figs/sample/success_plot_OPE_OTB100_threshold.png" alt="Success Plot of OTB ranked by Overlap Precision at Threshold 0.5" width="400">
 </p>
 
+The tool would also output the per challenge results if the ranking type is set to AUC
+<p align="center">
+<img src="figs/sample/success_plot_OPE_OTB100_SV.png" alt="Precision Plot of OTB ranked by AUC for Scale Variation attribute" width="400">
+<img src="figs/sample/success_plot_OPE_OTB100_OCC.png" alt="Success Plot of OTB ranked by AUC for Occlusion attribute" width="400">
+</p>
+
 ## Features
 * Compatible tracking protocol
 * Selection of different benchmarks to evaluate with (OTB, Temple-Color-128)
