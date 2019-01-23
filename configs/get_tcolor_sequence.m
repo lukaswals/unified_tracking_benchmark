@@ -15,7 +15,16 @@ function s = get_tcolor_sequence(seqspath, sequence)
     % ANNOS (GT Annotations)
     s.annos = dlmread(s.anno_file);
     % ATTR_FILE (which challenging attributes has this sequence)
-    
+    attr_filename = [sequence '_att.txt'];
+    s.attr_file = fullfile(s.path, attr_filename);
+    % ATTRIBUTES (challenging attributes tagged)
+    [attribute_names, ~] = get_attribute_list;
+    %attributes = zeros(1,length(attribute_names)); % Array that holds tags
+    fid = fopen(s.attr_file);
+    list = textscan(fid,'%s');
+    attr = list{1}';
+    fclose(fid);
+    s.attributes = double(ismember(attribute_names, attr)); % Convert to number array
     % NZ (num of zeros)
     s.nz = 4;
     % EXT

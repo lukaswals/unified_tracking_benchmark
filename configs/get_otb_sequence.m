@@ -29,6 +29,7 @@ function s = get_otb_sequence(seqspath, sequence)
     s.annos = dlmread(s.anno_file);
     % ATTR_FILE (which challenging attributes has this sequence)
     attr_file = [att_path '/' lower(s.name) '.txt'];
+    % ATTRIBUTES (challenging attributes tagged)
     s.attributes = load(attr_file);
     % NZ (num of zeros)
     s.nz = 4;
