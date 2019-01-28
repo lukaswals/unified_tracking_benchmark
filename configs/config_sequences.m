@@ -28,6 +28,7 @@ function sequences = config_sequences
                 dataset_folder = dataset;
         end
         seqspath = fullfile(get_global_variable('toolkit_path'), 'sequences', dataset_folder);
+        mkdir(seqspath);
     end
     
     seqs_file = fullfile(get_global_variable('toolkit_path'), 'sequences', [dataset '_SEQUENCES']);
@@ -86,14 +87,23 @@ end
 
 function download_if_needed(seqspath, sequence)
     dataset = get_global_variable('dataset');
+    switch dataset
+        case {'OTB2013', 'OTB50', 'OTB100'}
+            zipurl = ['http://cvlab.hanyang.ac.kr/tracker_benchmark/seq/' sequence '.zip'];
+        case 'TCOLOR128'
+            zipurl = ['http://www.dabi.temple.edu/~hbling/data/TColor-128/seqs/' sequence '.zip'];
+        otherwise
+            error('Dataset option ''%s'' not supported. Please check again the available datasets.', dataset);
+    end
+    
     fprintf('Downloading sequence ''%s'', This may take a while...\n', sequence);
     zipname = fullfile(seqspath, [sequence '.zip']);
-    zipurl = ['http://cvlab.hanyang.ac.kr/tracker_benchmark/seq/' sequence '.zip'];
+    
     try
         urlwrite(zipurl, zipname);
         unzip(zipname, seqspath);
     catch
-        fprintf('Download fails. Please try to download the bundle manually from %s and uncompress it to %s\n', zipurl, seqspath);
+        error('Download failed. Please try to download the bundle manually from ''%s'' and uncompress it to ''%s''\n', zipurl, seqspath);
     end
     %{
     if length(splitted) == 2
